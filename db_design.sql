@@ -22,3 +22,14 @@ CREATE TABLE IF NOT EXISTS employee (
 	department_id INT REFERENCES department
 );
 
+-- following table will have foreign keys from both, company table and department table
+-- following table will define many-to-many relationship
+CREATE TABLE IF NOT EXISTS company_department (
+	company_id INT REFERENCES company,
+	department_id INT REFERENCES department
+);
+
+-- following query is to list down all the tables present in current database
+SELECT table_name
+FROM information_schema.tables
+WHERE table_schema = 'public' AND table_type = 'BASE TABLE';
