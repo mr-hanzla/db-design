@@ -151,11 +151,47 @@ class Department {
         }
     }
     // =========================================
+
+    // ==================== UPDATE Department data
+    public function update_department_name($department_name, $department_id) {
+        $query = "UPDATE department SET department_name = '$department_name' WHERE department_id = $department_id;";
+        $result = $this->db_conn->query($query);
+
+        $affected_rows = pg_affected_rows($result);
+        echo "=========================================\n";
+        if ($affected_rows) {
+            echo "$affected_rows record(s) updated successfully!\n";
+        } else {
+            echo "No record found for Department ID: $department_id\n";
+        }
+    }
+
+    public function update_department_name_by_name($department_name, $department_name_condition) {
+        $query = "UPDATE department SET department_name = '$department_name' WHERE department_name = '$department_name_condition';";
+        $result = $this->db_conn->query($query);
+
+        $affected_rows = pg_affected_rows($result);
+        echo "=========================================\n";
+        if ($affected_rows) {
+            echo "$affected_rows record(s) updated successfully!\n";
+        } else {
+            echo "No record found for Department Name: $department_name_condition\n";
+        }
+    }
+    // =========================================
 }
 
 $a = new Department();
-$a->get_department_by_id(23);
-$a->get_department_by_id(2);
-$a->get_department_by_name("Legal");
+
+// $a->update_department_name("Administrator", 23);
+// $a->update_department_name_by_name("Sales", "Sales & Reach");
+
+// $a->delete_department_by_id(30);
+// $a->delete_department_by_name("Admin");
+// $a->delete_all_departments();
+
+// $a->get_department_by_id(23);
+// $a->get_department_by_id(2);
+// $a->get_department_by_name("Legal");
 $a->get_all_departents();
 ?>
