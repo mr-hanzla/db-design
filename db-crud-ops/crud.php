@@ -113,6 +113,44 @@ class Department {
         $this->show_department_data($result);
     }
     // =========================================
+
+    // ==================== DELETE Department data
+    public function delete_department_by_id($department_id) {
+        $query = "DELETE FROM department WHERE department_id = $department_id;";
+        $result = $this->db_conn->query($query);
+
+        $deleted_rows = pg_affected_rows($result);
+        echo "=========================================\n";
+        if ($deleted_rows) {
+            echo "$deleted_rows record(s) deleted successfully!\n";
+        } else {
+            echo "No record found for Department ID: $department_id\n";
+        }
+    }
+
+    public function delete_department_by_name($department_name) {
+        $query = "DELETE FROM department WHERE department_name = '$department_name';";
+        $result = $this->db_conn->query($query);
+
+        $deleted_rows = pg_affected_rows($result);
+        echo "=========================================\n";
+        if ($deleted_rows) {
+            echo "$deleted_rows record(s) deleted successfully!\n";
+        } else {
+            echo "No record found for Department Name: $department_name\n";
+        }
+    }
+
+    public function delete_all_departments() {
+        $query = "TRUNCATE department CASCADE;";
+        $result = $this->db_conn->query($query);
+
+        echo "=========================================\n";
+        if ($result) {
+            echo "Department Data Truncated!\n";
+        }
+    }
+    // =========================================
 }
 
 $a = new Department();
