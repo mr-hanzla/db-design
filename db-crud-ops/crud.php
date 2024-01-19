@@ -58,25 +58,58 @@ class DBConnection {
     }
 }
 
-$host = "localhost";
-$port = 5432;
-$db_name = "pf";
-$user = "postgres";
-$password = "asdf1234";
+class Department {
+    private $db_conn;
 
-$db_con = new DBConnection($host, $port, $db_name, $user, $password);
-$db_con->select_testing();
-echo "===============================================\n";
-// $db_con->update_testing();
-// $db_con->select_testing();
+    function __construct() {
+        $host = "localhost";
+        $port = 5432;
+        $db_name = "pf";
+        $user = "postgres";
+        $password = "asdf1234";
 
-// $conn_string = "host=$host
-//                 port=$port
-//                 dbname=$db_name
-//                 user=$user
-//                 password=$password";
-// $db_conn = pg_connect($conn_string) or die("Could not connect!");
-// echo "Connected Succesfully! ";
+        $this->db_conn = new DBConnection($host, $port, $db_name, $user, $password);
+    }
 
-// pg_close($db_conn)
+    // to show data in pretty format
+    private function show_department_data($department_data) {
+        echo "=========================================\n";
+        if (count(pg_fetch_all($department_data)) == 0) {
+            echo "No record found!\n";
+            return;
+        }
+        while ($row = pg_fetch_row($department_data)) {
+            echo "Department ID: $row[0]  Department Name : $row[1] \n";
+        }
+    }
+
+    // ==================== READ Department data
+    public function get_department_by_id(int $department_id) {
+        $query = "SELECT * FROM department d WHERE department_id = $department_id;";
+        $result = $this->db_conn->query($query);
+
+        $this->show_department_data($result);
+    }
+
+    public function get_department_by_name(string $department_name) {
+        $query = "SELECT * FROM department d WHERE department_name = '$department_name';";
+        $result = $this->db_conn->query($query);
+
+        $this->show_department_data($result);
+    }
+
+    public function get_all_departents() {
+        $query = "SELECT * FROM department d;";
+        $result = $this->db_conn->query($query);
+
+        $this->show_department_data($result);
+    }
+    // =========================================
+}
+
+$a = new Department();
+$a->get_department_by_id(23);
+$a->get_department_by_id(2);
+$a->get_department_by_name("Legal");
+$a->get_all_departents();
 ?>
