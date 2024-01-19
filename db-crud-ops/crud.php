@@ -74,7 +74,7 @@ class Department {
         $port = 5432;
         $db_name = "pf";
         $user = "postgres";
-        $password = "asdf1234";
+        $password = "<your-password>";
 
         $this->db_conn = new DBConnection($host, $port, $db_name, $user, $password);
     }
