@@ -19,6 +19,8 @@ class DBConnection {
 
     function __destruct() {
         pg_close($this->db_conn);
+        echo "=========================================\n";
+        echo "DB Connection closed!\n";
     }
 
     public function query($query) {
@@ -26,16 +28,10 @@ class DBConnection {
 
         if (!$result) {
             echo "An error occurred.\n";
-            exit;
+            return false;
         }
 
-        $arr = pg_fetch_all($result);
-        if (count($arr) > 0) {
-            echo count($arr) . "\n";
-            print_r($arr[0]);
-            echo count($arr[0]) . "\n";
-        }
-        // print_r($arr);
+        return $result;
     }
 
     public function select_testing() {
@@ -57,7 +53,8 @@ class DBConnection {
     private function connect_db() {
         $conn_string = $this->get_conn_string();
         $this->db_conn = pg_connect($conn_string);
-        echo "Connection ban gia hy!\n";
+        echo "=========================================\n";
+        echo "DB Connection Successful!\n";
     }
 }
 
