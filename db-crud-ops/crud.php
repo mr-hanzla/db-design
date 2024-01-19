@@ -179,6 +179,21 @@ class Department {
         }
     }
     // =========================================
+
+    // ==================== CREATE Department data
+    public function create_department($department_name) {
+        $query = "INSERT INTO department (department_name) VALUES ('Admin')";
+        $result = $this->db_conn->query($query);
+
+        $affected_rows = pg_affected_rows($result);
+        echo "=========================================\n";
+        if ($affected_rows) {
+            echo "$affected_rows record(s) created successfully!\n";
+        } else {
+            echo "Error in creating department!\n";
+        }
+    }
+    // =========================================
 }
 
 $a = new Department();
