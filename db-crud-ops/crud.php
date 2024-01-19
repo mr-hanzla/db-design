@@ -34,6 +34,14 @@ class DBConnection {
         return $result;
     }
 
+    public function get_row_count($table_name) {
+        $query = "SELECT COUNT(*) FROM $table_name;";
+        $result = $this->db_conn->query($query);
+
+        $res = pg_fetch_row($result);
+        return (int)$res[0];
+    }
+
     public function select_testing() {
         $this->query("SELECT * FROM department d");
     }
